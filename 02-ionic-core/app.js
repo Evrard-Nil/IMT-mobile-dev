@@ -16,23 +16,23 @@ fetch(BLOG_API_URL)
 
 
 function appendData(json) {
-    let mainContainer = document.getElementById("ionicList");
+    let list = document.getElementById("ionicList");
     json.forEach(article => {
         let card = document.createElement("ion-card");
         let img = document.createElement("img");
-        let cardHeader = document.createElement("ion-card-header");
-        let cardTitle = document.createElement("ion-card-title");
-        let cardContent = document.createElement("ion-card-content");
+        let h = document.createElement("ion-card-header");
+        let t = document.createElement("ion-card-title");
+        let c = document.createElement("ion-card-content");
 
         img.src = BLOG_IMAGES_URL + article.image;
-        cardTitle.innerHTML = article.title;
-        cardContent.innerHTML = article.brief;
+        t.innerHTML = article.title;
+        c.innerHTML = article.brief;
 
-        cardHeader.appendChild(cardTitle);
+        h.appendChild(t);
         card.appendChild(img);
-        card.appendChild(cardHeader);
-        card.appendChild(cardContent);
+        card.appendChild(h);
+        card.appendChild(c);
         card.href = BLOG_POST_URL + article.id;
-        mainContainer.appendChild(card);
+        list.appendChild(card);
     });
 }
