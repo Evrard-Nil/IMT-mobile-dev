@@ -1,0 +1,5 @@
+{
+    "name": "Mini PWA",
+    "start_url": "https://localhost",
+    "display": "standalone"
+}
