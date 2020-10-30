@@ -26,8 +26,28 @@ class _ConvertisseurDevisePage extends State<ConvertisseurDevisePage> {
     _deviseFinale = Devise.DOLLAR;
   }
 
-  void updateRes() {
-    _resultat = _deviseInitiale.convert(_valeur, _deviseFinale);
+  /// Converti la [_valeur] de [_deviseInitiale] à [_deviseFinale]
+  void convert() {
+    setState(() {
+      _resultat = _deviseInitiale.convert(_valeur, _deviseFinale);
+    });
+  }
+
+  /// Invoqué lorsque l'utisateur tape uen valeur
+  void _onValChanged(String newVal) {
+    setState(() => _valeur = double.parse(newVal));
+  }
+
+  /// Invoqué lorsque l'utilisateur change la valeur
+  /// de la devise initiale
+  void _updateDeviseFinale(Devise newVal) {
+    setState(() => _deviseFinale = newVal);
+  }
+
+  /// Invoqué lorsque l'utilisateur change la valeur
+  /// de la devise finale
+  void _updateDeviseInit(Devise newVal) {
+    setState(() => _deviseInitiale = newVal);
   }
 
   @override
@@ -42,40 +62,17 @@ class _ConvertisseurDevisePage extends State<ConvertisseurDevisePage> {
         Spacer(),
         Text('De', style: AppStyle.labelStyle),
         Spacer(),
-        Listedevises(
-          value: _deviseInitiale,
-          onChanged: (newVal) {
-            setState(() {
-              _deviseInitiale = newVal;
-              updateRes();
-            });
-          },
-        ),
+        Listedevises(value: _deviseInitiale, onChanged: _updateDeviseInit),
         Spacer(),
         Text('Vers', style: AppStyle.labelStyle),
         Spacer(),
-        Listedevises(
-          value: _deviseFinale,
-          onChanged: (newVal) {
-            setState(() {
-              _deviseFinale = newVal;
-              updateRes();
-            });
-          },
-        ),
+        Listedevises(value: _deviseFinale, onChanged: _updateDeviseFinale),
         Spacer(flex: 2),
-        ElevatedButton(onPressed: () => true, child: Text('Convertir')),
+        ElevatedButton(onPressed: convert, child: Text('Convertir')),
         Spacer(flex: 2),
         Text(_resultat.toString(), style: AppStyle.labelStyle),
         Spacer(),
       ],
     ));
-  }
-
-  void _onValChanged(newVal) {
-    setState(() {
-      _valeur = double.parse(newVal);
-      updateRes();
-    });
   }
 }
